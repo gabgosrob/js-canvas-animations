@@ -5,7 +5,7 @@ let context = canvas.getContext("2d");
 context.fillStyle = "black";
 context.fillRect(0, 0, canvas.width, canvas.height);
 
-const maxLetters = window.innerWidth / 14;
+const maxLetters = window.innerWidth / 15;
 const LETTERS = [
     "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L",
     "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X",
@@ -19,9 +19,8 @@ class Letter {
     constructor(x, y) {
         this.x = x;
         this.y = y;
-        this.speed = this.getRandomSpeed();
         this.color = "rgb(130, 255, 0)";
-        this.fontSize = 24;
+        this.fontSize = 30;
     }
 
     update() {
@@ -32,7 +31,7 @@ class Letter {
             this.x,
             this.y
         )
-        this.y += this.fontSize * this.speed;
+        this.y += this.fontSize * 0.8;
         if (this.y >= canvas.height) {
             this.changePosition();
         }
@@ -40,41 +39,37 @@ class Letter {
 
     changePosition() {
         this.x = this.getRandomX();
-        this.y = this.getRandomY();
+        this.y = 0
     }
 
     getRandomX() {
         return Math.random() * canvas.width;
     }
-
-    getRandomY() {
-        return Math.random() * canvas.height * 0.15;
-    }
-
-    getRandomSpeed() {
-        return 0.7 - Math.random() * 0.4;
-    }
 }
 
 function render() {
-    makeEverythingMoreTransparent();
-    if (currentLetters.length < maxLetters) {
-        let newLetter = new Letter(
-            Math.random() * canvas.width,
-            Math.random() * canvas.height
-        );
-        currentLetters.push(newLetter);
-    }
+    setTimeout(function() {
+        makeEverythingMoreTransparent();
+        if (currentLetters.length < maxLetters) {
+            let newLetter = new Letter(
+                Math.random() * canvas.width,
+                Math.random() * canvas.height
+            );
+            currentLetters.push(newLetter);
+        }
 
-    currentLetters.forEach(letter => {
-        letter.update();
-    });
+        currentLetters.forEach(letter => {
+            letter.update();
+        });
 
-    requestAnimationFrame(render);
+        requestAnimationFrame(render);
+    }, 1000/20)
+    
 }
 
 function makeEverythingMoreTransparent() {
-    context.fillStyle = "rgba(0, 0, 0, 0.07)";
+    // paint over everything with a bit of transparency
+    context.fillStyle = "rgba(0, 0, 0, 0.18)";
     context.fillRect(0, 0, canvas.width, canvas.height);
 }
 
