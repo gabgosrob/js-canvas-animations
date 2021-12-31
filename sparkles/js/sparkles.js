@@ -19,10 +19,10 @@ class Sparkle {
     }
 
     getRandomColor() {
-        let r = 255 - Math.random() * 254;
-        let g = 255 - Math.random() * 254;
-        let b = 255 - Math.random() * 254;
-        return `rgb(${r},${g},${b})`
+        // only return yellow-ish colors
+        let r = 255;
+        let g = 255 - Math.random() * 70;
+        return `rgb(${r},${g},0)`
     }
 
     getRandomRadius() {
@@ -38,10 +38,12 @@ class Sparkle {
     }
 
     draw() {
-        context.beginPath();
-        context.arc(this.x, this.y, this.radius, 0, 2 * Math.PI);
-        context.fillStyle = this.color;
-        context.fill();
+        if (Math.random() > 0.2) { //this conditional is for flashing
+            context.beginPath();
+            context.arc(this.x, this.y, this.radius, 0, 2 * Math.PI);
+            context.fillStyle = this.color;
+            context.fill();
+        }
         this.x += this.xVelocity;
         this.y += this.yVelocity
         this.yVelocity += gravity;
