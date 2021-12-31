@@ -38,7 +38,7 @@ class Sparkle {
     }
 
     draw() {
-        if (Math.random() > 0.2) { //this conditional is for flashing
+        if (Math.random() > 0.3) { //this conditional is for flashing
             context.beginPath();
             context.arc(this.x, this.y, this.radius, 0, 2 * Math.PI);
             context.fillStyle = this.color;
